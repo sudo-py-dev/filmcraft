@@ -1065,7 +1065,9 @@ fn bin_card(app: &mut FilmcraftApp, ui: &mut egui::Ui, r: Rect, b: &Bin, v: &Vie
     let f = font(app);
     let nr = Rect::from_min_max(pos2(th.min.x, th.max.y + 2.0), pos2(th.max.x, th.max.y + 20.0));
     if !rename_field(app, ui, nr, None, Some(b.id.0), &v.prefix) {
-        let cg = ui.painter().layout_no_wrap(tlf!("{n} items", n = n.len()), Tokens::ui(f - 1.5), t.text_dim);
+        let n = n.len();
+        let count = if n == 1 { tlf!("{n} item", n) } else { tlf!("{n} items", n) };
+        let cg = ui.painter().layout_no_wrap(count, Tokens::ui(f - 1.5), t.text_dim);
         let cw = cg.size().x;
         ui.painter().galley(pos2(th.max.x - cw, th.max.y + 11.0 - cg.size().y / 2.0), cg, t.text_dim);
         // The name gets only what is left beside the count. At the smallest icon sizes that can be
